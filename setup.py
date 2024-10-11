@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="MrLou_AudioCodes",  # Replace with your own package name
-    version="0.2.0",  # Initial release version
+    version="0.3.0",  # Initial release version
     author="Louis-Philippe Descamps",  # Replace with your name
     author_email="me@lpdne.eu",  # Replace with your email
     description="A module for MrLou_AudioCodes API",  # Short description

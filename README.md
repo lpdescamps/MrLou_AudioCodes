@@ -85,6 +85,15 @@ This guide provides an overview of the classes, functions, and usage examples fo
      - `tls_ctxt_id`: TLS context ID.
    - **Output**: Device certificate as a string, or the response object.
 
+5. **`get_ini(fqdn, auth, ini_name, ini_file_path)`**
+   - Sends a `GET` request to retrieve the device ini configuration file.
+   - **Input**: 
+     - `fqdn`: Server FQDN.
+     - `auth`: Authentication string.
+     - `ini_name`: the file name.
+     - `ini_file_path`: the full path.
+   - **Output**: Device ini configuration file.
+
 ### **POST Requests**
 
 1. **`save_configuration(fqdn, auth)`**

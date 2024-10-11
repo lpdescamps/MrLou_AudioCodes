@@ -1,6 +1,7 @@
 import requests
 import urllib3
 from requests.exceptions import ConnectionError, Timeout, HTTPError
+import os
 
 # Suppress only the InsecureRequestWarning from urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -94,26 +95,46 @@ def get_device_certificate(fqdn, auth, tls_ctxt_id):
         return response.text
     return response
 
+#def get_ini(fqdn, auth, ini_name, ini_file_path):
 
-def get_ini(fqdn, auth, sbc_ip):
-    url = f"https://{fqdn}/api/v1/files/ini"
-    payload = {}
-    headers = {
-        'Authorization': f'Basic {auth}'
-    }
+def get_ini(fqdn, auth, ini_name, ini_file_path):
+    url = f'api/v1/files/ini'
+    request = GETRequest(fqdn, auth)
+    response = request.send(url)
+    if response:
+        filename = os.path.join(ini_file_path, f"{ini_name}.ini")
 
-    response = requests.request("GET", url, headers=headers, data=payload, verify=False)
+        with open(filename, "w", newline='\n') as file:
+            file.write(response.text)
 
-    filename = os.path.join(SBC_INI_FILES, f"{sbc_ip}.ini")
+        print(f"Response saved to {filename}")
 
-    with open(filename, "w", newline='\n') as file:
-        file.write(response.text)
+        return response.text
+    return response
 
-    print(f"Response saved to {filename}")
+
+
+
+# def get_ini(fqdn, auth, sbc_ip):
+#     url = f"https://{fqdn}/api/v1/files/ini"
+#     payload = {}
+#     headers = {
+#         'Authorization': f'Basic {auth}'
+#     }
+#
+#     response = requests.request("GET", url, headers=headers, data=payload, verify=False)
+#
+#     filename = os.path.join(SBC_INI_FILES, f"{sbc_ip}.ini")
+#
+#     with open(filename, "w", newline='\n') as file:
+#         file.write(response.text)
+#
+#     print(f"Response saved to {filename}")
+
+
 
 
 # Functions to use POST method using class POSTRequest(HTTPRequest)
-
 
 def save_configuration(fqdn, auth):
     url = 'api/v1/actions/saveConfiguration'
